@@ -1,10 +1,8 @@
+
 resource "alicloud_instance" "redis" {
-  availability_zone = data.alicloud_zones.default.zones.0.id
-  security_groups   = [alicloud_security_group.redis.id]
-
-  host_name = "redis"
-
-  # series III
+  availability_zone          = data.alicloud_zones.default.zones.0.id
+  security_groups            = [alicloud_security_group.redis.id]
+  host_name                  = "redis"
   instance_type              = "ecs.g6.large"
   system_disk_category       = "cloud_essd"
   system_disk_name           = "Yazeed"
@@ -16,9 +14,7 @@ resource "alicloud_instance" "redis" {
   instance_charge_type       = "PostPaid"
   vswitch_id                 = alicloud_vswitch.private.id
   key_name                   = alicloud_ecs_key_pair.myKey.key_pair_name
-
-  user_data = base64encode(file("redis-setup.sh"))
-
+  user_data                  = base64encode(file("redis-setup.sh"))
 }
 
 output "redis_server_private_ip" {

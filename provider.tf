@@ -6,14 +6,14 @@
 # https://www.alibabacloud.com/help/en/ecs/product-overview/regions-and-zones
 
 provider "alicloud" {
-  access_key = var.access_key
-  secret_key = var.secret_key
-  region = "me-central-1"
+  access_key   = var.access_key
+  secret_key   = var.secret_key
+  region       = "me-central-1"
 }
 
 # Define a variable to name the Terraform configuration
 variable "name" {
-  default = "terraform-alicloud"
+  default     = "terraform-alicloud"
 }
 
 # add the zones to the server

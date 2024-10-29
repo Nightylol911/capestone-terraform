@@ -1,24 +1,24 @@
 
 
-resource "alicloud_nlb_load_balancer" "default" {
-  load_balancer_name = "http"
+resource "alicloud_nlb_load_balancer" "nlb" {
+  load_balancer_name = "http-load-balancer"
   load_balancer_type = "Network"
   address_type       = "Internet"
   address_ip_version = "Ipv4"
   vpc_id             = alicloud_vpc.vpc.id
 
   zone_mappings {
-    vswitch_id = alicloud_vswitch.public.id
+    vswitch_id = alicloud_vswitch.public-a.id
     zone_id    = data.alicloud_zones.default.zones.0.id
   }
   zone_mappings {
-    vswitch_id = alicloud_vswitch.public2.id
+    vswitch_id = alicloud_vswitch.public-b.id
     zone_id    = data.alicloud_zones.default.zones.1.id
   }
 }
 
 resource "alicloud_nlb_server_group" "serverGroups" {
-  server_group_name        = "http"
+  server_group_name        = "http-serverGroups"
   server_group_type        = "Instance"
   vpc_id                   = alicloud_vpc.vpc.id
   scheduler                = "rr"
@@ -40,11 +40,11 @@ resource "alicloud_nlb_server_group" "serverGroups" {
 }
 
 resource "alicloud_nlb_server_group_server_attachment" "serverGroups_attachment" {
-  count           = length(alicloud_instance.instance)
+  count           = length(alicloud_instance.http)
   server_type     = "Ecs"
-  server_id       = alicloud_instance.instance[count.index].id
+  server_id       = alicloud_instance.http[count.index].id
   description     = "http"
-  port            = 80
+  port            = 5000
   server_group_id = alicloud_nlb_server_group.serverGroups.id
   weight          = 100
 }
@@ -52,8 +52,8 @@ resource "alicloud_nlb_server_group_server_attachment" "serverGroups_attachment"
 resource "alicloud_nlb_listener" "default" {
   listener_protocol      = "TCP"
   listener_port          = "80"
-  listener_description   = var.name
-  load_balancer_id       = alicloud_nlb_load_balancer.default.id
+  listener_description   = "http-listener"
+  load_balancer_id       = alicloud_nlb_load_balancer.nlb.id
   server_group_id        = alicloud_nlb_server_group.serverGroups.id
   idle_timeout           = "900"
   proxy_protocol_enabled = "false"
@@ -62,5 +62,5 @@ resource "alicloud_nlb_listener" "default" {
 }
 
 output "loadBalancer_domain"{
-    value = alicloud_nlb_load_balancer.default.dns_name
+    value = alicloud_nlb_load_balancer.nlb.dns_name
 }

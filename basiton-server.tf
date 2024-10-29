@@ -8,8 +8,8 @@ resource "alicloud_instance" "basiton" {
   system_disk_size           = 40
   image_id                   = "ubuntu_24_04_x64_20G_alibase_20240812.vhd"
   instance_name              = "http"
-  vswitch_id                 = alicloud_vswitch.public.id
-  internet_max_bandwidth_out = 100
+  vswitch_id                 = alicloud_vswitch.public-a.id
+  internet_max_bandwidth_out = 10
   internet_charge_type       = "PayByTraffic"
   instance_charge_type       = "PostPaid"
   key_name                   = alicloud_ecs_key_pair.myKey.key_pair_name
