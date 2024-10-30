@@ -1,6 +1,6 @@
 resource "alicloud_instance" "mysql" {
   availability_zone          = data.alicloud_zones.default.zones.0.id
-  security_groups            = [alicloud_security_group.redis.id]
+  security_groups            = [alicloud_security_group.mysql.id]
   host_name                  = "mysql"
   instance_type              = "ecs.g6.large"
   system_disk_category       = "cloud_essd"

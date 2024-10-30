@@ -1,7 +1,7 @@
 
 resource "alicloud_instance" "redis" {
   availability_zone          = data.alicloud_zones.default.zones.0.id
-  security_groups            = [alicloud_security_group.redis.id]
+  security_groups            = [alicloud_security_group.redis-sg.id]
   host_name                  = "redis"
   instance_type              = "ecs.g6.large"
   system_disk_category       = "cloud_essd"

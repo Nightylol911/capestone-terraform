@@ -1,0 +1,9 @@
+#1 Delete all instance + routing tables + Vswitch + EIP and everything
+#2 Terraform apply
+#3 Add SSH Key + host + user to github repo
+#4 COpy key from device to basiton server
+#5 Copy key from basiton to the two private servers
+#6 use github runner on basiton server
+
+
+$7 take screen shot of normal push & pull request & deplopy to servers

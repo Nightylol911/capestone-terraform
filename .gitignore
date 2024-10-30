@@ -3,3 +3,4 @@
 variables.tf
 myKey.pem
 terraform.tfstate
+terraform.tfstate.backup
