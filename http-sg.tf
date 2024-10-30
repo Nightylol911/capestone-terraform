@@ -23,5 +23,6 @@ resource "alicloud_security_group_rule" "allow_for_http" {
   port_range        = "80/80"
   priority          = 1
   security_group_id = alicloud_security_group.http.id
+  # source_security_group_id = alicloud_security_group.basiton.id
   cidr_ip           = "0.0.0.0/0"
 }
